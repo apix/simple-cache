@@ -2,7 +2,7 @@
     "name": "apix/simple-cache",
     "description": "PSR-16 cache wrapper to Apix-Cache.",
     "type": "library",
-    "keywords": ["psrCache", "psr-16", "psr-cache", "psr-simple-cache", "session", "cache", "caching", "taggable"],
+    "keywords": ["psrCache", "psr-16", "psr-cache", "psr-simple-cache", "session", "cache", "caching", "taggable", "cache-busting"],
     "homepage": "https://github.com/apix/apix-simple-cache",
     "license": "BSD-3-Clause",
     "authors": [
@@ -29,12 +29,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Apix\\Simple\\Cache\\": "src/"
+            "Apix\\SimpleCache\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Apix\\Simple\\Cache\\tests\\": "tests/"
+            "Apix\\SimpleCache\\tests\\": "tests/"
         }
     },
     "provide": {
