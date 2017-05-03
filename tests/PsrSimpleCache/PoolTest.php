@@ -138,7 +138,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->pool->setMultiple($this->items));
         $this->assertSame(
             $this->items + array('non-existant' => null),
-            $this->pool->getMultiple(['key1', 'key2', 'non-existant'])
+            $this->pool->getMultiple(array('key1', 'key2', 'non-existant'))
         );
     }
 
