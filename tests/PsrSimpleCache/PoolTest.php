@@ -118,7 +118,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->pool->setMultiple($this->items));
         $this->assertSame(
             $this->items,
-            $this->pool->getMultiple(['key1', 'key2'])
+            $this->pool->getMultiple(array('key1', 'key2'))
         );
     }
 
@@ -129,7 +129,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertSame(
             $this->items,
-            $this->pool->getMultiple(new \ArrayIterator(['key1', 'key2']))
+            $this->pool->getMultiple(new \ArrayIterator(array('key1', 'key2')))
         );
     }
 
@@ -137,7 +137,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->pool->setMultiple($this->items));
         $this->assertSame(
-            $this->items + [ 'non-existant' => null ],
+            $this->items + array('non-existant' => null),
             $this->pool->getMultiple(['key1', 'key2', 'non-existant'])
         );
     }
@@ -172,7 +172,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
     public function testSetMultipleWithExpired()
     {
         $this->assertFalse(
-            $this->pool->setMultiple(['key' => 'value'], -1)
+            $this->pool->setMultiple(array('key' => 'value'), -1)
         );
 
         $this->assertFalse($this->pool->has('key'));
@@ -184,7 +184,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
     public function testSetMultipleWithWongTtl()
     {
         $this->assertFalse(
-            $this->pool->setMultiple(['key' => 'value'], 'bad-ttl')
+            $this->pool->setMultiple(array('key' => 'value'), 'bad-ttl')
         );
 
         $this->assertFalse($this->pool->has('key'));
@@ -196,7 +196,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->pool->setMultiple($this->items));
 
         $this->assertTrue(
-            $this->pool->deleteMultiple(['key1', 'key2'])
+            $this->pool->deleteMultiple(array('key1', 'key2'))
         );
         $this->assertFalse($this->pool->has('key1'));
         $this->assertFalse($this->pool->has('key2'));
@@ -206,9 +206,9 @@ class PoolTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->pool->setMultiple($this->items));
 
-        $this->assertTrue(
-            $this->pool->deleteMultiple(new \ArrayIterator(['key1', 'key2']))
-        );
+        $this->assertTrue( $this->pool->deleteMultiple(
+            new \ArrayIterator(array('key1', 'key2'))
+        ) );
 
         $this->assertFalse($this->pool->has('key1'));
         $this->assertFalse($this->pool->has('key2'));
