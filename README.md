@@ -4,8 +4,7 @@ Apix-SimpleCache, the PSR-16 extension to [Apix-Cache](//github.com/frqnck/apix-
 
 Apix-SimpleCache provides PSR-16 to **[Apix-Cache](//github.com/frqnck/apix-cache)** permitting easy caching and invalidation...
 
-* **PSR-16** (SimpleCache) provided thru a factory wrapper class.
-* Fully **unit-tested** and compliant with PSR-1, PSR-2 and PSR-4.
+* Fully **unit-tested** and compliant with PSR-1, PSR-2, PSR-4 and PSR-16.
 * Continuously integrated with **PHP** **5.3**, **5.4**, **5.5**, **5.6**, **7.0** and **HHVM**.
 
 ⇄ *[Pull requests](//github.com/apix/simple-cache/blob/master/.github/CONTRIBUTING.md)* and ★ *Stars* are always welcome. For bugs and feature request, please [create an issue](//github.com/apix/simple-cache/issues/new).
