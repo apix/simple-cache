@@ -46,7 +46,7 @@ class Pool implements SimpleCacheInterface
         try {
             $item = $this->cache_item_pool->getItem($key);
         } catch (CacheInvalidArgumentException $e) {
-            static::_rethrow($e);
+            self::_rethrow($e);
         }
 
         return $item->isHit() ? $item->get() : $default;
@@ -75,7 +75,7 @@ class Pool implements SimpleCacheInterface
         try {
             $bool = $this->cache_item_pool->hasItem($key);
         } catch (CacheInvalidArgumentException $e) {
-            static::_rethrow($e);
+            self::_rethrow($e);
         }
 
         return $bool;
@@ -99,7 +99,7 @@ class Pool implements SimpleCacheInterface
         try {
             $bool = $this->cache_item_pool->deleteItems($keys);
         } catch (CacheInvalidArgumentException $e) {
-            static::_rethrow($e);
+            self::_rethrow($e);
         }
 
         return $bool;
@@ -113,7 +113,7 @@ class Pool implements SimpleCacheInterface
         try {
             $bool = $this->cache_item_pool->deleteItem($key);
         } catch (CacheInvalidArgumentException $e) {
-            static::_rethrow($e);
+            self::_rethrow($e);
         }
 
         return $bool;
@@ -126,11 +126,9 @@ class Pool implements SimpleCacheInterface
     {
         try {
             $item = $this->cache_item_pool->getItem($key);
-            // $item->expiresAfter($ttl)
-            //      ->set($value);
             $this->setItemProperties($item, $value, $ttl);
         } catch (CacheInvalidArgumentException $e) {
-            static::_rethrow($e);
+            self::_rethrow($e);
         }
 
         return $this->cache_item_pool->save($item);
@@ -148,32 +146,27 @@ class Pool implements SimpleCacheInterface
             ));
         }
 
-        foreach ($values as $key => $value) {
-            $keys[] = $key;
-        }
+        $keys = array_keys((array) $values);
 
         try {
             $items = $this->cache_item_pool->getItems($keys);
         } catch (CacheInvalidArgumentException $e) {
-            static::_rethrow($e);
+            self::_rethrow($e);
         }
 
-        $itemSuccess = true;
-
+        $success = true;
         foreach ($items as $key => $item) {
             try {
-                // $item->set($values[$key])
-                //      ->expiresAfter($ttl);
                 $this->setItemProperties($item, $values[$key], $ttl);
             } catch (CacheInvalidArgumentException $e) {
-                static::_rethrow($e);
+                self::_rethrow($e);
             }
 
-            $itemSuccess = $itemSuccess
-                           && $this->cache_item_pool->saveDeferred($item);
+            $success = $success
+                       && $this->cache_item_pool->saveDeferred($item);
         }
 
-        return $itemSuccess && $this->cache_item_pool->commit();
+        return $success && $this->cache_item_pool->commit();
     }
 
     /**
@@ -181,7 +174,7 @@ class Pool implements SimpleCacheInterface
      *
      * @param CacheItem              $item
      * @param mixed                  $value The item value (unserialized)
-     * @param \DateTime|integer|null $ttl
+     * @param integer|\DateInterval|null $ttl
      *
      * @return static The invoked object.
      */

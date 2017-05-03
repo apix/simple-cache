@@ -52,25 +52,6 @@ class TaggablePool extends Pool
     /**
      * {@inheritdoc}
      */
-    public function get($key, $default = null)
-    {
-        $item = parent::get($key, $default = null);
-
-        // Set this pool tags rather than the actual cached item tags.
-        // $item->setTags($this->tags);
-
-        return $item;
-    }
-
-    /**
-     * Sets the properties of an item object.
-     *
-     * @param CacheItem              $item
-     * @param mixed                  $value The item value (unserialized)
-     * @param \DateTime|integer|null $ttl
-     *
-     * @return static The invoked object.
-     */
     protected function setItemProperties(
         CacheItem $item, $value, $ttl = null
     ) {
