@@ -206,9 +206,9 @@ class PoolTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->pool->setMultiple($this->items));
 
-        $this->assertTrue( $this->pool->deleteMultiple(
+        $this->assertTrue($this->pool->deleteMultiple(
             new \ArrayIterator(array('key1', 'key2'))
-        ) );
+        ));
 
         $this->assertFalse($this->pool->has('key1'));
         $this->assertFalse($this->pool->has('key2'));
