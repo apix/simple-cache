@@ -25,18 +25,15 @@ Basic usage
   #$backend = 'apc';                     // or an adapter name (string) e.g. "APC", "Runtime"
   #$backend = new MyArrayObject();       // or even a plain array() or \ArrayObject.
 
-  $pool = SimpleCache\Factory::getPool($backend);   // without tagging support
-  #$pool = SimpleCache\Factory::getTaggablePool($backend);    // with tagging
-  
-  $item = $pool->get('wibble_id');
-  
-  if ( !$item->isHit() ) {
-    $data = compute_expensive_stuff();
-    $item->set($data);
-    $pool->save($item);
+  $pool = SimpleCache\Factory::getPool($backend);           // without tagging support
+  #$pool = SimpleCache\Factory::getTaggablePool($backend);  // with tagging
+    
+  if ( !$pool->has('wibble_id') ) {
+    $data = compute_slow_and_expensive_stuff();
+    $pool->set('wibble_id', $data);
   }
 
-  return $item->get();
+  return $pool->get('wibble_id');
 ```
 
 
