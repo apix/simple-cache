@@ -20,6 +20,8 @@ class PoolTest extends \PHPUnit_Framework_TestCase
 {
     protected $pool = null;
 
+    protected $items = array('key1' => 'value1', 'key2' => 'value2');
+
     public function setUp()
     {
         $this->pool = new PsrSimpleCache(
@@ -52,19 +54,21 @@ class PoolTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider _invalidSingleKeyProvider
      * @expectedException \Psr\SimpleCache\InvalidArgumentException
      */
-    public function testGetWillThrowsException()
+    public function testGetWillThrowsException($key)
     {
-        $this->pool->get('{}');
+        $this->pool->get($key);
     }
 
     /**
+     * @dataProvider _invalidSingleKeyProvider
      * @expectedException \Psr\SimpleCache\InvalidArgumentException
      */
-    public function testSetWillThrowsException()
+    public function testSetWillThrowsException($key)
     {
-        $this->pool->set('{}', 'value');
+        $this->pool->set($key, 'value');
     }
 
     public function testSetExpired()
@@ -111,30 +115,29 @@ class PoolTest extends \PHPUnit_Framework_TestCase
 
     public function testSetMultipleAndGetMultiple()
     {
-        $items = ['key1' => 'value1', 'key2' => 'value2'];
-        $this->assertTrue($this->pool->setMultiple($items));
+        $this->assertTrue($this->pool->setMultiple($this->items));
         $this->assertSame(
-            $items,
+            $this->items,
             $this->pool->getMultiple(['key1', 'key2'])
         );
     }
 
     public function testSetMultipleAndGetMultipleWithTraversable()
     {
-        $items = ['key1' => 'value1', 'key2' => 'value2'];
-        $this->assertTrue($this->pool->setMultiple(new \ArrayIterator($items)));
+        $this->assertTrue($this->pool->setMultiple(
+            new \ArrayIterator($this->items))
+        );
         $this->assertSame(
-            $items,
+            $this->items,
             $this->pool->getMultiple(new \ArrayIterator(['key1', 'key2']))
         );
     }
 
     public function testGetMultipleWithNonExistantKey()
     {
-        $items = ['key1' => 'value1', 'key2' => 'value2'];
-        $this->assertTrue($this->pool->setMultiple($items));
+        $this->assertTrue($this->pool->setMultiple($this->items));
         $this->assertSame(
-            $items + [ 'non-existant' => null ],
+            $this->items + [ 'non-existant' => null ],
             $this->pool->getMultiple(['key1', 'key2', 'non-existant'])
         );
     }
@@ -190,8 +193,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
 
     public function testDeleteMultiple()
     {
-        $items = ['key1' => 'value1', 'key2' => 'value2'];
-        $this->assertTrue($this->pool->setMultiple($items));
+        $this->assertTrue($this->pool->setMultiple($this->items));
 
         $this->assertTrue(
             $this->pool->deleteMultiple(['key1', 'key2'])
@@ -202,8 +204,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
 
     public function testDeleteMultipleWithTraversable()
     {
-        $items = ['key1' => 'value1', 'key2' => 'value2'];
-        $this->assertTrue($this->pool->setMultiple($items));
+        $this->assertTrue($this->pool->setMultiple($this->items));
 
         $this->assertTrue(
             $this->pool->deleteMultiple(new \ArrayIterator(['key1', 'key2']))
@@ -255,20 +256,20 @@ class PoolTest extends \PHPUnit_Framework_TestCase
      */
     protected static function _invalidKeyProvider()
     {
-        return [
-            ['foo{bar'],
-            ['foo}bar'],
-            ['foo(bar'],
-            ['foo)bar'],
-            ['foo/bar'],
-            ['foo\\bar'],
-            ['foo@bar'],
-            ['foo:bar'],
-            'null'    => [ null ],
-            'boolean' => [ true ],
-            'integer' => [ 1 ],
-            'float'   => [ 1.1 ]
-        ];
+        return array(
+            array('foo{bar'),
+            array('foo}bar'),
+            array('foo(bar'),
+            array('foo)bar'),
+            array('foo/bar'),
+            array('foo\\bar'),
+            array('foo@bar'),
+            array('foo:bar'),
+            'null'    => array( null ),
+            'boolean' => array( true ),
+            'integer' => array( 1 ),
+            'float'   => array( 1.1 )
+        );
     }
 
     /**
@@ -280,11 +281,10 @@ class PoolTest extends \PHPUnit_Framework_TestCase
     public static function _invalidSingleKeyProvider()
     {
         $keys = static::_invalidKeyProvider();
-        $keys = static::_invalidKeyProvider();
 
         return array_merge($keys, [
-            'array'  => [ array() ],
-            'object' => [ new \stdClass() ],
+            'array'  => array( array() ),
+            'object' => array( new \stdClass() ),
         ]);
     }
 
@@ -298,14 +298,14 @@ class PoolTest extends \PHPUnit_Framework_TestCase
     {
         $keys = static::_invalidKeyProvider();
 
-        $return = array_merge($keys, [
-            'object' => [ new \stdClass() ],
-        ]);
+        $return = array_merge($keys, array(
+            'object' => array( new \stdClass() ),
+        ));
 
         foreach ($keys as $input) {
-            $key = $input[0];
-            $return[] = [[$key]];
-            $return[] = [new \ArrayIterator([$key])];
+            $key = array($input[0]);
+            $return[] = array( $key );
+            $return[] = array( new \ArrayIterator($key));
         }
 
         return $return;
@@ -321,14 +321,14 @@ class PoolTest extends \PHPUnit_Framework_TestCase
     {
         $keys = static::_invalidKeyProvider();
 
-        $return = array_merge($keys, [
-            'object' => [ new \stdClass() ],
-        ]);
+        $return = array_merge($keys, array(
+            'object' => array( new \stdClass() ),
+        ));
 
         foreach ($keys as $input) {
-            $key = $input[0];
-            $return[] = [[$key => 'value']];
-            $return[] = [new \ArrayIterator([$key => 'value'])];
+            $key = array( $input[0] => 'value' );
+            $return[] = array( $key );
+            $return[] = array( new \ArrayIterator($key));
         }
 
         return $return;
