@@ -49,7 +49,6 @@ matrix:
   fast_finish: true
   allow_failures:
     - php: nightly
-    - php: 5.3
 
 cache:
  directories:
