@@ -1,0 +1,17 @@
+# .scrutinizer.yml #
+tools:
+    external_code_coverage:
+        timeout: 600
+        runs: 17
+
+checks:
+    php:
+        code_rating: true
+        duplication: true
+
+filter:
+    excluded_paths:
+        - 'vendor/*'
+        - 'tests/*'
+        - 'build/*'
+    paths: {  }
