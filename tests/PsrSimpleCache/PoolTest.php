@@ -282,10 +282,10 @@ class PoolTest extends \PHPUnit_Framework_TestCase
     {
         $keys = static::_invalidKeyProvider();
 
-        return array_merge($keys, [
+        return array_merge($keys, array(
             'array'  => array( array() ),
             'object' => array( new \stdClass() ),
-        ]);
+        ));
     }
 
     /**
