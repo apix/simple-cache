@@ -57,7 +57,7 @@ class Pool implements SimpleCacheInterface
      */
     public function getMultiple($keys, $default = null)
     {
-        $keys = static::_normalizedKeys($keys);
+        $keys = self::_normalizedKeys($keys);
 
         $items = array();
         foreach ($keys as $key) {
@@ -94,7 +94,7 @@ class Pool implements SimpleCacheInterface
      */
     public function deleteMultiple($keys)
     {
-        $keys = static::_normalizedKeys($keys);
+        $keys = self::_normalizedKeys($keys);
 
         try {
             $bool = $this->cache_item_pool->deleteItems($keys);
