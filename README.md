@@ -1,8 +1,8 @@
-Apix-Simple-Cache, the PSR-16 extension to Apix-Cache
+Apix-SimpleCache, the PSR-16 extension to Apix-Cache
 =================================
 [![Latest Stable Version](https://poser.pugx.org/apix/simple-cache/v/stable.svg)](https://packagist.org/packages/apix/simple-cache)  [![Build Status](https://scrutinizer-ci.com/g/apix/simple-cache/badges/build.png?b=master)](https://scrutinizer-ci.com/g/apix/simple-cache/build-status/master)  [![Code Quality](https://scrutinizer-ci.com/g/apix/simple-cache/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/apix/simple-cache/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/apix/simple-cache/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/apix/simple-cache/?branch=master) [![License](https://poser.pugx.org/apix/simple-cache/license.svg)](https://packagist.org/packages/apix/simple-cache) [![Build Status](https://travis-ci.org/apix/simple-cache.png?branch=master)](https://travis-ci.org/apix/simple-cache)
 
-Apix-Simple-Cache provides PSR-16 to [Apix-Cache](//github.com/frqnck/apix-cache) permitting easy caching and invalidation...
+Apix-SimpleCache provides PSR-16 to [Apix-Cache](//github.com/frqnck/apix-cache) permitting easy caching and invalidation...
 
 * **PSR-16** (SimpleCache) provided thru a factory wrapper class.
 * Fully unit **tested** and compliant with PSR-1, PSR-2, PSR-4 and PSR-SimpleCache.
