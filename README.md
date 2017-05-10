@@ -23,15 +23,15 @@ Basic usage
   #$client = 'apc';                     // or an adapter name (string) e.g. "APC", "Runtime"
   #$client = new MyArrayObject();       // or even a plain array() or \ArrayObject.
 
-  $pool = SimpleCache\Factory::getPool($client);           // without tagging support
-  #$pool = SimpleCache\Factory::getTaggablePool($client);  // with tagging
+  $cache = SimpleCache\Factory::getPool($client);           // without tagging support
+  #$cache = SimpleCache\Factory::getTaggablePool($client);  // with tagging
     
-  if ( !$pool->has('wibble_id') ) {
+  if ( !$cache->has('wibble_id') ) {
     $data = compute_slow_and_expensive_stuff();
-    $pool->set('wibble_id', $data);
+    $cache->set('wibble_id', $data);
   }
 
-  return $pool->get('wibble_id');
+  return $cache->get('wibble_id');
 ```
 
 Installation
