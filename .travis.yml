@@ -1,17 +1,29 @@
 language: php
-
 sudo: required
-
 php:
-  - 5.3
-  - 5.4
-  - 5.5
   - 5.6
   - 7.0
-  - nightly
+  - 7.1
+  - 7.2
+  - 7.3
   - hhvm
+  - nightly
   # fails with the message "HHVM nightly is no longer supported on Ubuntu Precise"
   #- hhvm-nightly
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 5.3
+      dist: precise
+    - php: 5.4
+      dist: trusty
+    - php: 5.5
+      dist: trusty
+  allow_failures:
+    - php: nightly
+    - php: hhvm
+
 
 before_install:
   - travis_retry composer self-update
@@ -37,9 +49,6 @@ after_script:
   - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
   - php vendor/bin/coveralls -v
 
-
-  - php vendor/bin/coveralls -v
-
 notifications:
   irc: "irc.freenode.org#ouarz"
   email:
@@ -47,11 +56,6 @@ notifications:
       - dev-team@ouarz.net
     on_success: change
     on_failure: change
-
-matrix:
-  fast_finish: true
-  allow_failures:
-    - php: nightly
 
 cache:
  directories:
